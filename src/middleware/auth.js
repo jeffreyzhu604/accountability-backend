@@ -16,9 +16,7 @@ const auth = async (req, res, next) => {
     // Since we have the payload from the token, we can now find a user with that id
     // and also if the token is in the user's tokens array
     try {
-        console.log(data)
         const user = await User.findOne({_id: data._id, 'tokens.token': token});
-        console.log(user);
         if (!user) {
             throw new Error();
         }

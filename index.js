@@ -11,13 +11,12 @@ const app = express(); // Create an Express instance
 
 app.use(cors());
 app.use(express.json()); // Ensure the data that we send and receive from server is in JSON format
-app.use(userRouter);
-app.use(agreementRouter);
+app.use(userRouter); // Handling routes for users
+app.use(agreementRouter); // Handling routes for agreements
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-});
-
+/*
+    NOTE: Run command: npm run devstart
+*/
 app.listen(PORT, (req, res) => {
     console.log(`Server started at PORT ${PORT}`);
 });

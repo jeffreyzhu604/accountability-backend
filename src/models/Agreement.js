@@ -6,13 +6,6 @@
 const mongoose = require("mongoose");
 
 const agreementSchema = mongoose.Schema({
-    /*
-        - Start date
-        - End date
-        - Amount
-        - Description
-        - Friend
-    */
    startDate: {
        type: Date,
        default: Date.now

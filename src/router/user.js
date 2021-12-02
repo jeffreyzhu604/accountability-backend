@@ -7,13 +7,10 @@ router.post("/register", async (req, res) => {
     // Create a new user
     try {
         const user = new User(req.body);
-        console.log("creating user")
         await user.save();
-        console.log("user created");
         const token = await user.generateAuthToken();
         res.status(200).send({ user, token });
     } catch (error) {
-        console.log(error)
         res.status(400).send(error);
     }
 });
@@ -22,7 +19,6 @@ router.post("/login", async (req, res) => {
     // Login a registered user
     try {
         const { email, password } = req.body;
-        console.log(email, password);
         const user = await User.findByCredentials(email, password);
         if (!user) {
             return res.status(401).send({error: "Login failed! Check authentication credentials."});
@@ -36,7 +32,6 @@ router.post("/login", async (req, res) => {
 
 router.get("/users/me", auth, async (req, res) => {
     // View logged in user profile
-    console.log(req.user)
     res.send(req.user);
 });
 
@@ -62,7 +57,6 @@ router.get("/users/me/logoutall", auth, async (req, res) => {
     // Log user out of all devices
     try {
         req.user.tokens.splice(0, req.user.tokens.length);
-        console.log(req.user.tokens)
         await req.user.save();
         res.send();
     } catch (err) {
@@ -89,7 +83,6 @@ router.put("/add-friend", async (req, res) => {
         const activeUserID = req.body.activeUser._id;
         const activeUserFriends = req.body.activeUser.friends;
         const friendID = req.body._id;
-        console.log(activeUserID, activeUserFriends, friendID);
         if (!activeUserFriends.includes(friendID)) {
             await User.updateOne({_id: activeUserID}, {$push: {friends: friendID}});
             await User.updateOne({_id: friendID}, {$push: {friends: activeUserID}});            
