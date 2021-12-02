@@ -24,7 +24,7 @@ router.post("/login", async (req, res) => {
             return res.status(401).send({error: "Login failed! Check authentication credentials."});
         }
         const token = await user.generateAuthToken();
-        res.send({ user, token });
+        res.status(200).send({ user, token });
     } catch (error) {
         res.status(400).send(error);
     }
@@ -32,7 +32,7 @@ router.post("/login", async (req, res) => {
 
 router.get("/users/me", auth, async (req, res) => {
     // View logged in user profile
-    res.send(req.user);
+    res.status(200).send(req.user);
 });
 
 router.get("/users/me/logout", auth, async (req, res) => {
@@ -47,7 +47,7 @@ router.get("/users/me/logout", auth, async (req, res) => {
             return token.token != req.token;
         });
         await req.user.save();
-        res.send();
+        res.status(200).writesend();
     } catch (err) {
         res.status(500).send(err);
     }
@@ -58,7 +58,7 @@ router.get("/users/me/logoutall", auth, async (req, res) => {
     try {
         req.user.tokens.splice(0, req.user.tokens.length);
         await req.user.save();
-        res.send();
+        res.status(200).send();
     } catch (err) {
         res.status(500).send(err);
     }
