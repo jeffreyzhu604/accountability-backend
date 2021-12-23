@@ -1,6 +1,7 @@
 // https://medium.com/swlh/jwt-authentication-authorization-in-nodejs-express-mongodb-rest-apis-2019-ad14ec818122
 
 const cors = require("cors");
+const path = require("path");
 const express = require("express"); // Load Express
 const userRouter = require("./src/router/user"); // Get the routes for user
 const agreementRouter = require("./src/router/agreement");
